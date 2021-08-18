@@ -1,0 +1,19 @@
+
+
+.bg-img {
+    /* The image used */
+    background-image: url("../imgs/shopping-experience1.jpg");
+    /*background-image: url("https://www.kotak.com/content/dam/Kotak/product_card_images/how-credit-cards-enhance-your-shopping-experience.jpg");
+    */
+    min-height: 380px;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 10px;
+}
+
+    
+
+    

@@ -1,0 +1,47 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+sup {
+    top: -1.1em;
+}
+
+/* Main Content 
+main {
+    padding: 2rem;
+    background-color: rgb(228, 229, 253);
+}
+
+/*section {
+    background-color: white;
+}*/
+
+/* For Icon */
+footer i {
+    letter-spacing: 10px;
+}
+
+/* figure {
+    margin-bottom: 5rem;
+    width: fit-content;
+    /* background-color: rgb(255, 236, 250); 
+    }
+    figure img {
+        width: 20rem;
+    } */
+
+#back-top {
+    /* width: 100%; */
+    /* font-size: large; */
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 0px;
+}
+
+/* Footer Content */
+
+footer {
+    padding: 50px;
+    line-height: 50px;
+}
+

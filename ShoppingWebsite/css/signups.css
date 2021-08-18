@@ -1,0 +1,40 @@
+﻿.bg-img {
+    /* The image used */
+    /*background-image: url("../imgs/shopping-experience.jpg");*/
+    /*background-image: url("https://www.lsretail.com/hubfs/BLOG_6-technology-trends-reshaping-luxury-fashion-industry.jpg");*/
+    /*min-height: 380px;*/
+    /* Center and scale the image nicely */
+    /*background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;*/
+    position: relative;
+}
+
+/* Add styles to the form container */
+.container-form {
+    max-width: 960px;
+    padding: 1em;
+    /* border: none; */
+    /*background-color: rgba(228, 228, 228, 0.822);*/
+    /*background-color: rgba(82, 82, 82, 0.651);*/
+}
+
+
+/*When screen width datalist less than 770px*/
+
+@media only screen and (max-width: 770px) {
+    .container-form {
+        margin: 0rem;
+        width: 100%;
+        background-color: rgba(100, 100, 100, 0.712);
+        color: white;
+    }
+
+    .container-form .inputs.form-group span {
+        color: lightpink;
+    }
+
+    .bg-img {
+        background-image: url(../imgs/shopping-experience1.jpg);
+    }
+}
