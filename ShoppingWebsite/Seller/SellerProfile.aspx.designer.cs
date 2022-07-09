@@ -15,40 +15,13 @@ namespace ShoppingWebsite.Seller
     {
 
         /// <summary>
-        /// editProfile control.
+        /// status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton editProfile;
-
-        /// <summary>
-        /// changePsw control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton changePsw;
-
-        /// <summary>
-        /// MultiView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MultiView1;
-
-        /// <summary>
-        /// View1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View1;
+        protected global::System.Web.UI.WebControls.Label status;
 
         /// <summary>
         /// firstName control.
@@ -159,15 +132,6 @@ namespace ShoppingWebsite.Seller
         protected global::System.Web.UI.WebControls.Button Update;
 
         /// <summary>
-        /// View2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View2;
-
-        /// <summary>
         /// ScriptManager1 control.
         /// </summary>
         /// <remarks>
@@ -204,13 +168,13 @@ namespace ShoppingWebsite.Seller
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl check;
 
         /// <summary>
-        /// cnfpsw control.
+        /// Oldpsw control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox cnfpsw;
+        protected global::System.Web.UI.WebControls.TextBox Oldpsw;
 
         /// <summary>
         /// lblmsg control.
@@ -294,12 +258,12 @@ namespace ShoppingWebsite.Seller
         protected global::System.Web.UI.WebControls.Label updCheckLabel1;
 
         /// <summary>
-        /// btnnext1 control.
+        /// Btnnext1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnnext1;
+        protected global::System.Web.UI.WebControls.Button Btnnext1;
     }
 }

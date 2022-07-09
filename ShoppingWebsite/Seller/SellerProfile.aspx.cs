@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace ShoppingWebsite.Seller
 {
@@ -22,20 +23,19 @@ namespace ShoppingWebsite.Seller
                 if (Session["username"].ToString() == "" || Session["username"] == null)
                 {
                     Response.Write("<script>alert('Session Expired Login Again');</script>");
-                    Response.Redirect("../LoginPages/LoginUser.aspx");
+                    Response.Redirect("~/Seller/SellerProfile.aspx");
                 }
                 else
                 {
                     if (!Page.IsPostBack)
                     {
                         getSellerPersonalDetails();
-                        MultiView1.ActiveViewIndex = 0;
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
         }
 
@@ -63,17 +63,16 @@ namespace ShoppingWebsite.Seller
             {
                 connect();
 
-                SqlCommand cmd = new SqlCommand("UPDATE seller_info SET fname=@fname, lname=@lname, contact=@contact, adhar_no=@adhar_no, email=@email, address=@address, state=@state, city=@city, pincode=@pincode WHERE Id='" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
+                SqlCommand cmd = new SqlCommand("UPDATE seller_info SET firstname=@firstname, lastname=@lastname, contact=@contact, adhar_no=@adhar_no, email=@email, address=@address, state=@state, city=@city WHERE Id='" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
 
-                cmd.Parameters.AddWithValue("@fname", firstName.Text.Trim());
-                cmd.Parameters.AddWithValue("@lname", lastName.Text.Trim());
+                cmd.Parameters.AddWithValue("@firstname", firstName.Text.Trim());
+                cmd.Parameters.AddWithValue("@lastname", lastName.Text.Trim());
                 cmd.Parameters.AddWithValue("@adhar_no", adhar_no.Text.Trim());
                 cmd.Parameters.AddWithValue("@contact", contact.Text.Trim());
                 cmd.Parameters.AddWithValue("@email", email.Text.Trim());
                 cmd.Parameters.AddWithValue("@address", address.Text.Trim());
                 cmd.Parameters.AddWithValue("@state", state.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@city", city.Text.Trim());
-                cmd.Parameters.AddWithValue("@pincode", pincode.Text.Trim());
 
                 int result = cmd.ExecuteNonQuery();
                 con.Close();
@@ -84,7 +83,7 @@ namespace ShoppingWebsite.Seller
                 }
                 else
                 {
-                    Response.Write("<script>alert('Invaid entry');</script>");
+                    Response.Write("<script>alert('Invalid entry');</script>");
                 }
 
             }
@@ -105,43 +104,47 @@ namespace ShoppingWebsite.Seller
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                firstName.Text = dt.Rows[0]["fname"].ToString();
-                lastName.Text = dt.Rows[0]["lname"].ToString();
+                firstName.Text = dt.Rows[0]["firstname"].ToString();
+                lastName.Text = dt.Rows[0]["lastname"].ToString();
                 adhar_no.Text = dt.Rows[0]["adhar_no"].ToString();
                 contact.Text = dt.Rows[0]["contact"].ToString();
                 email.Text = dt.Rows[0]["email"].ToString();
                 address.Text = dt.Rows[0]["address"].ToString();
                 state.SelectedValue = dt.Rows[0]["state"].ToString().Trim();
                 city.Text = dt.Rows[0]["city"].ToString();
-                pincode.Text = dt.Rows[0]["pincode"].ToString();
                 username.Text = dt.Rows[0]["username"].ToString();
                 password.Attributes["value"] = dt.Rows[0]["password"].ToString();
+                status.Text = dt.Rows[0]["status"].ToString();
 
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert( "+ ex + ");</script>");
+                Console.WriteLine(ex);
+                Debug.WriteLine("Something went wrong");
             }
         }
 
-        protected void cnfpsw_TextChanged(object sender, EventArgs e)
+        protected void Oldpsw_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cnfpsw.Text))
+            if (!string.IsNullOrEmpty(Oldpsw.Text))
             {
                 connect();
 
-                SqlCommand cmd = new SqlCommand("SELECT password from seller_info where Id = '" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                cnfpsw.Attributes["value"] = cnfpsw.Text;
-                if (dt.Rows[0]["password"].ToString() == cnfpsw.Text)
+                SqlCommand cmd = new SqlCommand("SELECT password from seller_info where Id = '" + (string)Session["Id"] + "' and password=@psw;", con);
+                cmd.Parameters.AddWithValue("@psw", Oldpsw.Text);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+
+                if (dr.HasRows)
                 {
+                    //cnfpsw.Attributes["value"] = cnfpsw.Text;
+                    //    if ((string)dt.Rows[0]["password"] == Oldpsw.Text)
+                    //{
                     lblmsg.Visible = true;
                     pswsucc.Visible = true;
                     check.Attributes.Add("class", "fas fa-check-circle text-success");
                     lblmsg.Text = "";
-                    btnnext1.Enabled = true;
+                    Btnnext1.Enabled = true;
                 }
                 else
                 {
@@ -149,14 +152,15 @@ namespace ShoppingWebsite.Seller
                     pswsucc.Visible = true;
                     check.Attributes.Add("class", "fas fa-times-circle text-danger");
                     lblmsg.Text = "Incorrect Password..!!";
-                    username.Focus();
+                    Btnnext1.Enabled = false;
+                    Oldpsw.Focus();
                 }
             }
             else
             {
                 lblmsg.Visible = false;
                 pswsucc.Visible = false;
-                btnnext1.Enabled = false;
+                Btnnext1.Enabled = false;
             }
         }
 
@@ -167,6 +171,7 @@ namespace ShoppingWebsite.Seller
                 connect();
 
                 SqlCommand cmd = new SqlCommand("update seller_info set password=@password where Id = '" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
+                
                 passwordconfirm.Attributes["value"] = passwordconfirm.Text;
                 cmd.Parameters.AddWithValue("@password", passwordconfirm.Text);
 
@@ -179,7 +184,7 @@ namespace ShoppingWebsite.Seller
                 }
                 else
                 {
-                    Response.Write("<script>alert('Invaid entry');</script>");
+                    Response.Write("<script>alert('Invalid entry');</script>");
                 }
             }
         }

@@ -30,8 +30,11 @@ namespace ShoppingWebsite
         }
         protected void connect()
         {
-            con = new SqlConnection(strcon); //strcon is Connection String
-            con.Open();
+            con = new SqlConnection(strcon);
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
         }
         protected void BindCategory1()
         {

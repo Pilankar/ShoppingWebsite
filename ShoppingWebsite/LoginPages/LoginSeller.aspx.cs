@@ -28,8 +28,9 @@ namespace ShoppingWebsite.LoginPages
                 {
                     con.Open();
                 }
-                
+
                 //string Password = Page.Request.Form["_password"].ToString();
+                password.Attributes["value"] = password.Text.Trim();
                 SqlCommand cmd = new SqlCommand("select * from seller_info where username COLLATE SQL_Latin1_General_CP1_CS_AS like '" + username.Text.Trim() + "' AND password COLLATE SQL_Latin1_General_CP1_CS_AS like '" + password.Text.Trim() + "'", con);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
@@ -42,7 +43,8 @@ namespace ShoppingWebsite.LoginPages
                         Session["firstname"] = dr.GetValue(1).ToString();
                         Session["role"] = "seller";
                     }
-                    Response.Redirect("~/Seller/SellerHomePage.aspx");
+                    Response.Redirect(ResolveClientUrl("~/Seller/SellerHomePage.aspx"));
+
                 }
                 else
                 {

@@ -9,22 +9,31 @@
 
     <%-- bootstrap css --%>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <%-- datatable css --%>
-    <link href="datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    
     <%-- icons css --%>
     <link href="fontawesome/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-    <%-- bootstrap js --%>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <%-- scripts --%>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <%-- Fonts --%>
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Judson:wght@700&display=swap" rel="stylesheet">
+    
+    <%--Datatables--%>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
 
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
+
+    
     <%-- custom css --%>
     <!--<link href="css/shopping.css" rel="stylesheet" />-->
 
@@ -121,6 +130,18 @@
             background-color: #228;
         }
 
+        ::selection {
+            background-color: #dc3545DD;
+            color: white;
+        }
+
+        .nav3 {
+            display: none;
+        }
+        .nav4 {
+            display: none;
+        }
+        
         @media only screen and (max-width: 770px) {
             #searchProduct {
                 width: 9rem;
@@ -152,18 +173,21 @@
             });
             
         });
-         
-    </script><asp:ContentPlaceHolder ID="head" runat="server">
+
+    </script>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0" nonce="LINidFi9"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" nonce="BEO8U9lG"></script>
 
-    <%-- Header --%>
-    <form id="form1" runat="server">
+    
+    <form id="form1" runat="server" method="post">
 
-        
+        <%-- Header --%>
+        <header>
             <nav class="nav1 navbar navbar-expand-lg navbar-light bg-light border-bottom border-2 justify-content-around" id="header">
                 <a class="navbar-brand" href="#">
                     <span style="color: tomato; font-size: 1.2em; letter-spacing: -2px;">funky</span>
@@ -174,7 +198,7 @@
                         <div class="d-flex flex-wrap input-group">
                             <input class="form-control" id="searchProduct" runat="server"
                                 type="search" placeholder="Search any product or brand" aria-label="Search">
-                            <button class="btn btn-outline-secondary">
+                            <button class="btn btn-outline-secondary" id="SearchBtn" runat="server" onserverclick="SearchBtnClicked">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -183,7 +207,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="navbar-brand" href="~/Cart.aspx">
+                        <a class="navbar-brand" href='<%=Response.ApplyAppPathModifier("AddToCart.aspx")%>'>
                             <i class="fas fa-shopping-bag"></i>
                             <sup>
                                 <span class="badge rounded-pill bg-danger" style="font-family: monospace; font-size: small; margin-left: -1rem;" hidden="hidden">3</span>
@@ -202,22 +226,19 @@
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <asp:LinkButton CssClass="nav-link active" ID="SellerProfile" runat="server" Visible="false" OnClick="SellerProfile_Click">Hello Seller</asp:LinkButton>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link text-white" id="home" runat="server" href="/HomePage.aspx">Home <span class="sr-only">(current)</span></a>
+                                <asp:LinkButton CssClass="nav-link active" ID="Home" runat="server" OnClick="Home_Click" CausesValidation="False">Home</asp:LinkButton>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" id="category" runat="server" href="/Categories.aspx">Category</a>
+                                <asp:LinkButton CssClass="nav-link active" ID="Category" runat="server" OnClick="Category_Click" CausesValidation="False">Category</asp:LinkButton>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle active" href="#"  id="A1" role="button"
+                                <a class="nav-link dropdown-toggle active" id="A1" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false" runat="server">Women
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="A1">
                                     <asp:Repeater ID="RepWomen" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="~/SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
+                                            <li><a class="dropdown-item" href="SubCategory.aspx?cat=<%# Eval("name")%>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -229,7 +250,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="A2">
                                     <asp:Repeater ID="RepMen" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="~/SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
+                                            <li><a class="dropdown-item" href="../SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -241,7 +262,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="A3">
                                     <asp:Repeater ID="RepKids" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="~/SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
+                                            <li><a class="dropdown-item" href="../SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -253,7 +274,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="A4">
                                     <asp:Repeater ID="RepAcc" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="~/SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
+                                            <li><a class="dropdown-item" href="../SubCategory.aspx?cat=<%# Eval("name") %>&subcat=<%# Eval("subcategory") %>" target="_blank"><%# Eval("subcategory") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -289,21 +310,59 @@
                         </li>
 
                         <li class="nav-item active">
-                            <asp:LinkButton CssClass="nav-link active" ID="AdminPortal" runat="server" Visible="false">Admin Portal</asp:LinkButton>
+                            <asp:LinkButton CssClass="nav-link active" ID="Logout" runat="server" Visible="false" OnClick="Logout_Click" CausesValidation="False">Logout</asp:LinkButton>
                         </li>
 
                         <li class="nav-item active">
-                            <asp:LinkButton CssClass="nav-link active" ID="Logout" runat="server" Visible="false" OnClick="Logout_Click">Logout</asp:LinkButton>
+                            <asp:LinkButton CssClass="nav-link active" ID="UserProfile" runat="server" Visible="false" OnClick="UserProfile_Click" CausesValidation="False">Hello user</asp:LinkButton>
                         </li>
+                    </ul>
 
-                        <li class="nav-item active">
-                            <asp:LinkButton CssClass="nav-link active" ID="UserProfile" runat="server" Visible="false" OnClick="UserProfile_Click">Hello user</asp:LinkButton>
+                </div>
+            </nav>
+        </header>
+
+        <nav class="nav3 navbar py-0 navbar-expand-lg" style="box-shadow: 0px 0px 5px -1px;">
+                <div class="container-fluid">
+
+                    <span class="navbar-brand pt-0">
+                        <span style="color: tomato; font-size: 0.9em; letter-spacing: -2px;">funky</span>
+                        <span style="font-size: medium; letter-spacing: 2px; color: #42A;">FASHION</span>
+                    </span>
+
+                    <ul class="navbar-nav list-group-horizontal">
+                        <li class="nav-item">
+                            <asp:LinkButton CssClass="nav-link" style="color: black;" ID="SellerProfile" runat="server" OnClick="SellerProfile_Click" CausesValidation="False"><i class="fas fa-user-circle"></i>  Hello Seller</asp:LinkButton>
+                        </li>
+                        <li class="nav-item">
+                            <asp:LinkButton CssClass="nav-link active" style="color: black;" ID="LinkButton3" runat="server" 
+                                OnClick="Logout_Click" CausesValidation="False">Logout</asp:LinkButton>
                         </li>
                     </ul>
 
                 </div>
             </nav>
 
+        <nav class="nav4 navbar py-0 navbar-expand-lg" style="box-shadow: 0px 0px 5px -1px;">
+                <div class="container-fluid">
+
+                    <span class="navbar-brand pt-0">
+                        <span style="color: tomato; font-size: 0.9em; letter-spacing: -2px;">funky</span>
+                        <span style="font-size: medium; letter-spacing: 2px; color: #42A;">FASHION</span>
+                    </span>
+
+                    <ul class="navbar-nav list-group-horizontal">
+                        <li class="nav-item">
+                            <asp:Label CssClass="nav-link" ID="adminName" runat="server"><i class="fas fa-user-shield"></i>  Hello Admin</asp:Label>
+                        </li>
+                        <li class="nav-item">
+                            <asp:LinkButton CssClass="nav-link active" ID="LinkButton4" runat="server"
+                                OnClick="Logout_Click" CausesValidation="False">Logout</asp:LinkButton>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
         <!-- / Header -->
 
 
@@ -353,28 +412,28 @@
                                             <a class="nav-link" href="HomePage.aspx">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="HomePage.aspx#aboutUs">About Us</a>
+                                            <a class="nav-link" href="HomePage.aspx#section4">About Us</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="HomePage.aspx#contactUs">Contact</a>
+                                            <a class="nav-link" href="HomePage.aspx#section5">Contact</a>
                                         </li>
 
                                     </ul>
                                 </div>
                                 <div class="col-4">
-                                    <h6>HELP</h6>
+                                    <h6>Categories</h6>
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Shipping & Return Policy</a>
+                                            <a class="nav-link" href="Categories.aspx#WomenCategory">Women</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Help Center</a>
+                                            <a class="nav-link" href="Categories.aspx#MenCategory">Men</a>
                                         </li>
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="#">Terms & Conditions</a>
+                                            <a class="nav-link" href="Categories.aspx#KidsCategory">Kids</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Privacy Policy</a>
+                                            <a class="nav-link" href="Categories.aspx#AccessoryCategory">Accessories</a>
                                         </li>
                                     </ul>
                                 </div>

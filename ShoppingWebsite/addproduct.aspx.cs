@@ -41,7 +41,7 @@ namespace ShoppingWebsite
 
                 //Response.Write("Stock Added");
 
-                Response.Write("<script>alert('Success');</script>");
+                Response.Write("<script>alert('Successfully Added Product');</script>");
             }
             catch (Exception ex)
             {
@@ -79,7 +79,6 @@ namespace ShoppingWebsite
                     string sql = "INSERT INTO [dbo].[Product] ([name], [brand], [desc], [mrp], [price], [care_instr], [fit_type], [color], [more_details], [img_name], [img_path], [stocked_date], [category_type], [category_subtype]) values(@name,@brand,@desc,@mrp,@price,@care_instr,@fit_type,@color,@more_details,@img_name,@img_path,@stocked_date,@category_type,@category_subtype);";
                     using (SqlCommand cmd = new SqlCommand(sql, con))
                     {
-
 
                         cmd.Parameters.AddWithValue("@name", Name.Text.Trim());
                         cmd.Parameters.AddWithValue("@brand", brand.Text.Trim());

@@ -30,19 +30,22 @@ namespace ShoppingWebsite.LoginPages
                     con.Open();
                 }
                 //string Password = Page.Request.Form["_password"].ToString();
+                password.Attributes["value"] = password.Text.Trim();
                 SqlCommand cmd = new SqlCommand("select * from Customer where username COLLATE SQL_Latin1_General_CP1_CS_AS like '" + username.Text.Trim() + "' AND password COLLATE SQL_Latin1_General_CP1_CS_AS like '" + password.Text.Trim() + "'", con);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
                     while (dr.Read())
                     {
-                        Response.Write("<script>alert('Successful Login');</script>");
                         Session["Id"] = dr.GetValue(0).ToString();
                         Session["username"] = dr.GetValue(9).ToString();
                         Session["firstname"] = dr.GetValue(1).ToString();
-                        Session["role"] = "user";
+                        Session["role"] = "User";
                     }
+                    Response.Write("<script>alert('Successful Login');</script>");
                     Response.Redirect("~/HomePage.aspx");
+                    //Response.Write("<script> window.history.back(); </ script > ");
+                    //Server.Transfer("javascript: history.go(-4);");
                 }
                 else
                 {

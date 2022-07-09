@@ -42,31 +42,31 @@ namespace ShoppingWebsite
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl searchProduct;
 
         /// <summary>
-        /// SellerProfile control.
+        /// SearchBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton SellerProfile;
+        protected global::System.Web.UI.HtmlControls.HtmlButton SearchBtn;
 
         /// <summary>
-        /// home control.
+        /// Home control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor home;
+        protected global::System.Web.UI.WebControls.LinkButton Home;
 
         /// <summary>
-        /// category control.
+        /// Category control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor category;
+        protected global::System.Web.UI.WebControls.LinkButton Category;
 
         /// <summary>
         /// A1 control.
@@ -159,15 +159,6 @@ namespace ShoppingWebsite
         protected global::System.Web.UI.HtmlControls.HtmlAnchor SignUpDropdown;
 
         /// <summary>
-        /// AdminPortal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AdminPortal;
-
-        /// <summary>
         /// Logout control.
         /// </summary>
         /// <remarks>
@@ -184,6 +175,42 @@ namespace ShoppingWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton UserProfile;
+
+        /// <summary>
+        /// SellerProfile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton SellerProfile;
+
+        /// <summary>
+        /// LinkButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+
+        /// <summary>
+        /// adminName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label adminName;
+
+        /// <summary>
+        /// LinkButton4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton4;
 
         /// <summary>
         /// ContentPlaceHolder1 control.

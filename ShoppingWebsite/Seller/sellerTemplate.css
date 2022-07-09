@@ -1,0 +1,158 @@
+﻿html, body {
+	height: 100%;
+	margin: 0;
+}
+
+main {
+	padding: 0px;
+}
+
+.nav-main {
+	/*min-height: 60rem;*/
+	height: 100%;
+	/*width: 14em;*/
+	/*float: left;*/
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	/*background-color: #111;*/
+	overflow-x: hidden;
+	margin-top:3em;
+}
+
+	.nav-main .btn {
+		font-size: 0.875em;
+	}
+
+	.nav-main a {
+		text-decoration: none;
+		color: var(--bs-light);
+		font-family: sans-serif;
+	}
+
+	.nav-main .active a {
+		color: var(--bs-primary);
+	}
+
+	.nav-main .nav-item:hover a {
+		color: white;
+	}
+
+	.nav-main .activeView {
+		background-color: var(--bs-danger);
+		border-radius: .25rem;
+	}
+
+		.nav-main .activeView a {
+			color: white;
+		}
+
+	.nav-main .nav-item .fas, .fab, .far, .bi {
+		margin: 0.5em;
+	}
+
+	.nav-main .btn {
+		text-align: left;
+	}
+
+	.nav-main .nav-item:hover {
+		background-color: var(--bs-danger);
+	}
+
+.content {
+	margin-left: auto;
+	margin-top: 3em;
+	clear: both;
+}
+
+	.content .d-flex.bg-light {
+		box-shadow: 2px -1px 4px 0px;
+	}
+
+	header {
+		display: none;
+	}
+
+.footer {
+	display: none;
+}
+
+.nav3 {
+	display: inherit;
+	top: 0;
+	z-index: 1;
+	position: fixed;
+	width: 100%;
+	background-color: var(--bs-white);
+}
+
+
+#Dashboard {
+}
+	#Dashboard .table {
+		box-shadow: 2px 2px 5px -3px;
+	}
+	
+	#Dashboard canvas {
+		box-shadow: 2px 2px 5px -3px;
+	}
+
+	#Dashboard .card-overview {
+		box-shadow: 2px 2px 5px -3px;
+		margin-block: 2em;
+		border-radius: 15px;
+		width: 12em;
+		height: auto;
+		border-width: 2px;
+		border-bottom-color: var(--bs-purple);
+		border-top-color: var(--bs-blue);
+		border-left-color: var(--bs-warning);
+		border-right-color: var(--bs-teal);
+	}
+
+        #Dashboard .card-overview .card-header {
+            background-color: rgba(0,0,0,.02);
+            font-weight: 500;
+            font-size: medium;
+        }
+
+		#Dashboard .card-overview .card-body .card {
+			border-radius: 15px;
+			width: 12em;
+			height: auto;
+			border-width: 2px;
+			border-bottom-color: var(--bs-purple);
+			border-top-color: var(--bs-blue);
+			border-left-color: var(--bs-warning);
+			border-right-color: var(--bs-teal);
+		}
+
+.prod-img{
+	height:100%;
+	object-fit: cover;
+}
+
+@media only screen and (max-width: 770px) {
+    .content {
+        margin-left: 0px;
+        margin-top: auto;
+        clear: both;
+    }
+
+    .nav-main {
+        /*min-height: 60rem;*/
+        height: auto;
+        /*width: 14em;*/
+        /*float: left;*/
+        position: relative;
+        z-index: 0;
+        /*background-color: #111;*/
+        overflow-x: auto;
+        margin-top: 0em;
+    }
+
+	.prod-img {
+		height: 7em;
+		object-fit: scale-down;
+	}
+}

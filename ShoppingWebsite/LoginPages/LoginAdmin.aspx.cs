@@ -41,9 +41,9 @@ namespace ShoppingWebsite.LoginPages
                         Session["username"] = dr.GetValue(1).ToString();
                         Session["firstname"] = dr.GetValue(3).ToString();
                         Session["role"] = "admin";
-                        Session.Timeout = 60;
                     }
-                    Response.Redirect("../HomePage.aspx");
+                    Response.Redirect(ResolveClientUrl("~/Admin/SellerManagement.aspx"));
+
                 }
                 else
                 {

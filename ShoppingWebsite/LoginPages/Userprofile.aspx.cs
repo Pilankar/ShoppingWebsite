@@ -4,9 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
+using System.Configuration; //for ConfigurationManager
+using System.Data; //for ConnectionState
+using System.Data.SqlClient; //for SqlConnection
+using System.Diagnostics;
 
 namespace ShoppingWebsite.LoginPages
 {
@@ -14,39 +15,46 @@ namespace ShoppingWebsite.LoginPages
     {
         string strcon = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         SqlConnection con;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                if (Session["username"].ToString() == "" || Session["username"] == null)
-                {
-                    Response.Write("<script>alert('Session Expired Login Again');</script>");
-                    Response.Redirect("../LoginPages/LoginUser.aspx");
-                }
-                else
-                {
-                    if (!Page.IsPostBack)
-                    {
-                        getUserPersonalDetails();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Debug.AutoFlush = true;
 
+            if (!Page.IsPostBack)
+            {
+                try
+                {
+                    if ((string)Session["username"] == "" || Session["username"] == null)
+                    {
+                        Response.Write("<script>alert('Session Expired Login Again');</script>");
+                        Response.Redirect("~/LoginPages/LoginUser.aspx");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Profile Opened"); 
+                        GetUserPersonalDetails();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Response.Write("<script>alert(" + ex + ");</script> ");
+                    Debug.WriteLine(ex);
+                }
             }
         }
 
         protected void Update_Click(object sender, EventArgs e)
         {
-            updateUserPersonalDetails();
+            
+            UpdateUserPersonalDetails();
         }
 
 
         // user defined function
 
-        void connect()
+        void Connect()
         {
             con = new SqlConnection(strcon);
             if (con.State == ConnectionState.Closed)
@@ -54,12 +62,13 @@ namespace ShoppingWebsite.LoginPages
                 con.Open();
             }
         }
-        void updateUserPersonalDetails()
+
+        void UpdateUserPersonalDetails()
         {
-            
+
             try
             {
-                connect();
+                Connect();
 
                 SqlCommand cmd = new SqlCommand("UPDATE Customer SET fname=@fname, lname=@lname, contact=@contact, email=@email, address=@address, state=@state, city=@city, pincode=@pincode WHERE Id='" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
 
@@ -78,7 +87,7 @@ namespace ShoppingWebsite.LoginPages
                 {
 
                     Response.Write("<script>alert('Your Details Updated Successfully');</script>");
-                    getUserPersonalDetails();
+                    GetUserPersonalDetails();
                 }
                 else
                 {
@@ -93,16 +102,28 @@ namespace ShoppingWebsite.LoginPages
         }
 
 
-        void getUserPersonalDetails()
+        void GetUserPersonalDetails()
         {
             try
             {
-                connect();
+                Debug.WriteLine("Getting Info");
 
-                SqlCommand cmd = new SqlCommand("SELECT * from Customer where Id='" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
+                con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                Debug.WriteLine("Connection Open");
+
+                SqlCommand cmd = new SqlCommand("SELECT * from Customer where Id='" + (string)Session["Id"] + "' and username = '" + (string)Session["username"] + "'; ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+
+                Debug.WriteLine("Got Info");
+
+                //Debug.WriteLine(dt.Rows[0]["fname"].ToString() + dt.Rows[0]["lname"].ToString() + dt.Rows[0]["contact"].ToString() + dt.Rows[0]["email"].ToString() + dt.Rows[0]["address"].ToString() + dt.Rows[0]["state"].ToString().Trim() + dt.Rows[0]["city"].ToString() + dt.Rows[0]["pincode"].ToString());
+                //Debug.WriteLine(dt.Rows[0]["username"].ToString());
 
                 firstName.Text = dt.Rows[0]["fname"].ToString();
                 lastName.Text = dt.Rows[0]["lname"].ToString();
@@ -112,34 +133,44 @@ namespace ShoppingWebsite.LoginPages
                 state.SelectedValue = dt.Rows[0]["state"].ToString().Trim();
                 city.Text = dt.Rows[0]["city"].ToString();
                 pincode.Text = dt.Rows[0]["pincode"].ToString();
-                username.Text = dt.Rows[0]["username"].ToString();
-                password.Attributes["value"] = dt.Rows[0]["password"].ToString();
-                
+                //Username.Text = dt.Rows[0]["username"].ToString();
+                Username.Text = (string)Session["username"];
+                password.Attributes.Add("value", dt.Rows[0]["password"].ToString());
+
+                Debug.WriteLine("Added Info");
             }
             catch (Exception ex)
             {
-                //
+                Console.WriteLine(ex);
+                Debug.WriteLine("Something went wrong");
             }
         }
 
-        protected void cnfpsw_TextChanged(object sender, EventArgs e)
+        protected void Oldpsw_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(cnfpsw.Text))
+            if (!string.IsNullOrEmpty(Oldpsw.Text))
             {
-                connect();
+                Connect();
 
-                SqlCommand cmd = new SqlCommand("SELECT password from Customer where Id = '" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                cnfpsw.Attributes["value"] = cnfpsw.Text;
-                if (dt.Rows[0]["password"].ToString() == cnfpsw.Text)
+                //SqlCommand cmd = new SqlCommand("SELECT password from Customer where Id = '" + (string)Session["Id"] + "' and username = '" + (string)Session["username"] + "'; ", con);
+                //SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
+
+                SqlCommand cmd = new SqlCommand("select * from Customer where Id = '" + (string)Session["Id"] + "' and password=@psw;", con);
+                cmd.Parameters.AddWithValue("@psw", Oldpsw.Text);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.HasRows)
                 {
+                    //cnfpsw.Attributes["value"] = cnfpsw.Text;
+                //    if ((string)dt.Rows[0]["password"] == Oldpsw.Text)
+                //{
                     lblmsg.Visible = true;
                     pswsucc.Visible = true;
                     check.Attributes.Add("class", "fas fa-check-circle text-success");
                     lblmsg.Text = "";
-                    btnnext1.Enabled = true;
+                    Btnnext1.Enabled = true;
                 }
                 else
                 {
@@ -147,25 +178,26 @@ namespace ShoppingWebsite.LoginPages
                     pswsucc.Visible = true;
                     check.Attributes.Add("class", "fas fa-times-circle text-danger");
                     lblmsg.Text = "Incorrect Password..!!";
-                    username.Focus();
+                    Btnnext1.Enabled = false;
+                    Oldpsw.Focus();
                 }
             }
             else
             {
                 lblmsg.Visible = false;
                 pswsucc.Visible = false;
-                btnnext1.Enabled = false;
+                Btnnext1.Enabled = false;
             }
         }
 
-        protected void btnnext1_Click(object sender, EventArgs e)
+        protected void Btnnext1_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(passwordconfirm.Text))
             {
-                connect();
+                Connect();
 
-                SqlCommand cmd = new SqlCommand("update Customer set password=@password where Id = '" + Session["Id"].ToString() + "' and username = '" + Session["username"].ToString() + "'; ", con);
-                passwordconfirm.Attributes["value"] = passwordconfirm.Text;
+                SqlCommand cmd = new SqlCommand("update Customer set password=@password where Id = '" + Session["Id"].ToString() + "'; ", con);
+                //passwordconfirm.Attributes["value"] = passwordconfirm.Text;
                 cmd.Parameters.AddWithValue("@password", passwordconfirm.Text);
 
                 int result = cmd.ExecuteNonQuery();
@@ -177,7 +209,7 @@ namespace ShoppingWebsite.LoginPages
                 }
                 else
                 {
-                    Response.Write("<script>alert('Invaid entry');</script>");
+                    Debug.WriteLine("Invalid entry");
                 }
             }
         }

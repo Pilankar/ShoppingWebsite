@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Messages>
+  <Customer>
+    <Name>Mitali</Name>
+    <Email-Id>pilankar@gmail.com</Email-Id>
+    <Message>This website is awesome.</Message>
+  </Customer>
+  <Customer>
+    <Name>Mansi Naik</Name>
+    <Email-Id>mansiNaik@gmail.com</Email-Id>
+    <Message>Great Website with great UI.</Message>
+  </Customer>
+  <Customer>
+    <Name>Manish Patil</Name>
+    <Email-Id>manishp27@gmail.com</Email-Id>
+    <Message>I am facing issue with buying products. Please fix it.</Message>
+  </Customer>
+  <Customer>
+    <Name>Mitali</Name>
+    <Email-Id>sharma@123.com</Email-Id>
+    <Message>Great Website</Message>
+  </Customer>
+  <Customer>
+    <Name>Mitali Pilankar</Name>
+    <Email-Id>pilankar07@gmail.com</Email-Id>
+    <Message>Website is awesome</Message>
+  </Customer>
+</Messages>

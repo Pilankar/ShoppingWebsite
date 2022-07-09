@@ -1,68 +1,84 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="SellerProfile.aspx.cs" Inherits="ShoppingWebsite.Seller.SellerProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        main .nav-item .fas, .fab {
-            margin: 0.5em;
-        }
+    <link href="sellerTemplate.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#View1').show();
+            $('#View2').hide();
 
-        main .navbar .btn {
-            text-align: left;
-        }
+            $('.Show_password').hover(function show() {
+                //Change the attribute to text  
+                $("#password").attr('type', 'text');
+                $("#cnfpsw").attr('type', 'text');
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            },
+                function () {
+                    //Change the attribute back to password  
+                    $("#password").attr("type", 'password');
+                    $("#cnfpsw").attr("type", 'password');
+                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                });
 
-        main .navbar .nav-item:hover {
-            background-color: var(--bs-danger);
-        }
+            $('#editProfile').click(function show(e) {
+                e.preventDefault(e);
+                $("#View1").show();
+                $("#View2").hide();
+                $("#editProfile").parent().addClass('activeView');
+                $("#changePsw").parent().removeClass('activeView');
+            });
 
-        .nav-main {
-            min-height: 30rem;
-        }
+            $('#changePsw').click(function show(e) {
+                e.preventDefault(e);
+                $("#View1").hide();
+                $("#View2").show();
+                $("#editProfile").parent().removeClass('activeView');
+                $("#changePsw").parent().addClass('activeView');
+            });
 
-        @media only screen and (max-width: 770px) {
-            .nav-main {
-                min-height: auto;
-            }
-        }
-    </style>
-
-    <script runat="server">
-        protected void editProfileClicked(object sender, EventArgs e)
-        {
-            MultiView1.ActiveViewIndex = 0;
-            Response.Write(0);
-        }
-        
-        protected void changePswClicked(object sender, EventArgs e)
-        {
-            MultiView1.ActiveViewIndex = 1;
-            Response.Write(1);
-        }
+        });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
-        <h3><i class="fas fa-user-cog m-2"></i>My Profile</h3>
-        <hr />
-        <div class="row">
-            <div class="nav-main col-md-3 bg-customBlue bg-gradient">
-                <nav class="navbar">
-                    <ul class="navbar-nav text-light w-100">
-                        <li class="nav-item nav-tabs mb-3 active">
-                            <button class="text-light btn w-100" id="editProfile" runat="server" onclick="editProfileClicked">
-                                <i class="fas fa-pen ms-2"></i>Edit Profile
-                            </button>
-                        </li>
-                        <li class="nav-item nav-tabs mb-3">
-                            <button class="text-decoration-none text-light btn w-100" id="changePsw" runat="server" onclick="changePswClicked">
-                                <i class="fas fa-key"></i>Change Password
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
+
+
+    <div class="row m-0">
+        <div class="nav-main col-lg-2 col-md-3 bg-customBlue bg-gradient p-0">
+            <nav class="navbar mt-2 p-2">
+                <ul class="navbar-nav text-light w-100">
+                    <li class="mb-3 ">
+                        <i class="fas fa-user-cog m-2"></i>My Profile
+                    </li>
+                    <li class="nav-item nav-tabs mb-3 activeView">
+                        <button class="text-light btn w-100" id="editProfile" type="button">
+                            <i class="fas fa-pen ms-2"></i>Edit Profile
+                        </button>
+                    </li>
+                    <li class="nav-item nav-tabs mb-3">
+                        <button class="text-decoration-none text-light btn w-100" id="changePsw" type="button">
+                            <i class="fas fa-key"></i>Change Password
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-lg-10 col-md-9 px-0 content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4 bg-light mx-0 pt-3 px-3 py-2" style="color: #42A;">
+                <h5><i class="fas fa-user-cog m-2"></i>My Profile</h5>
+                <span>
+                    <b>Staus: </b>
+                    <asp:Label runat="server" ID="status" Font-Bold="true" CssClass="text-capitalize"></asp:Label>
+                </span>
             </div>
-            <div class="col-md-7">
-                <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
-                    <asp:View ID="View1" runat="server">
+
+            <div class="col-lg-7 col-md-9 mx-4">
+
+                <div id="multiviews">
+
+                    <%-----Edit Profile Section------------------------------------------------------------------%>
+
+                    <div id="View1">
                         <div class="row g-3 border-1">
                             <div class="col-12">
                                 <h3>Edit Profile</h3>
@@ -165,73 +181,82 @@
                                 <asp:Button class="btn btn-primary bg-customBlue bg-gradient btn-lg w-25" ID="Update" runat="server" Text="Save" CausesValidation="False" />
                             </div>
                         </div>
-                    </asp:View>
+                    </div>
 
-                    <asp:View ID="View2" runat="server">
-                        <div class="row g-3">
-                            <div class="col-md-12 mb-2">
-                                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
-                                        <label for="cnfpsw" class="form-label">Old Password <span id="pswsucc" runat="server" visible="false"><i id="check" runat="server"></i></span></label>
+                    <%-----Change Password Section------------------------------------------------------------------%>
+
+                    <div id="View2">
+                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                        <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
+                            <ContentTemplate>
+                                <div class="row g-3">
+
+                                    <div class="col-md-12 mb-2">
+
+                                        <label for="Oldpsw" class="form-label">Old Password <span id="pswsucc" runat="server" visible="false"><i id="check" runat="server"></i></span></label>
                                         <div class="input-group">
-                                            <asp:TextBox class="form-control" ID="cnfpsw" runat="server" TextMode="Password" placeholder=""
-                                                OnTextChanged="cnfpsw_TextChanged" ClientIDMode="Static" AutoPostBack="true"></asp:TextBox>
-                                            <span class="input-group-text Show_password">
+                                            <asp:TextBox CssClass="form-control" ID="Oldpsw" runat="server"
+                                                OnTextChanged="Oldpsw_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                            <%--<span class="input-group-text Show_password">
                                                 <i class="fa fa-eye-slash icon"></i>
-                                            </span>
+                                            </span>--%>
                                         </div>
-                                        <asp:Label ID="lblmsg" runat="server" Visible="false"></asp:Label>
-                                    </ContentTemplate>
-                                    <Triggers>
-                                        <asp:PostBackTrigger ControlID="cnfpsw" />
-                                    </Triggers>
-                                </asp:UpdatePanel>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="password">New Password:</label>
-                                <div class="input-group">
-                                    <asp:TextBox class="form-control" ID="passwordnew"
-                                        runat="server" placeholder="" TextMode="Password"></asp:TextBox>
-                                    <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
+                                        <asp:Label ID="lblmsg" runat="server" Visible="false" Font-Italic="true" ForeColor="Red"></asp:Label>
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="password">New Password:</label>
+                                        <div class="input-group">
+                                            <asp:TextBox CssClass="form-control" ID="passwordnew"
+                                                runat="server" TextMode="SingleLine"></asp:TextBox>
+                                            <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
                                         <i class="fa fa-info-circle"></i>
-                                    </asp:Label>
-                                </div>
-                                <asp:RequiredFieldValidator ID="vpasswordconfirm" runat="server" Display="Dynamic" ForeColor="Red"
-                                    ErrorMessage="*password required" ControlToValidate="passwordnew"></asp:RequiredFieldValidator>
-                            </div>
+                                            </asp:Label>
+                                        </div>
+                                        <asp:RequiredFieldValidator ID="vpasswordconfirm" runat="server" Display="Dynamic" ForeColor="Red" ValidationGroup="Second"
+                                            ErrorMessage="*password required" ControlToValidate="passwordnew"></asp:RequiredFieldValidator>
+                                    </div>
 
-                            <div class="col-md-12 mb-3">
-                                <label for="password">Confirm New Password:</label>
-                                <div class="input-group">
-                                    <asp:TextBox class="form-control" ID="passwordconfirm"
-                                        runat="server" placeholder="" TextMode="Password"></asp:TextBox>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="password">Confirm New Password:</label>
+                                        <div class="input-group">
+                                            <asp:TextBox CssClass="form-control" ID="passwordconfirm"
+                                                runat="server" TextMode="SingleLine"></asp:TextBox>
 
-                                    <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
+                                            <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
                                         <i class="fa fa-info-circle"></i>
-                                    </asp:Label>
+                                            </asp:Label>
+                                        </div>
+
+                                        <asp:RequiredFieldValidator ID="vpassword" runat="server" Display="Dynamic" ForeColor="Red" ValidationGroup="Second"
+                                            ErrorMessage="*password required" ControlToValidate="passwordconfirm"></asp:RequiredFieldValidator>
+
+                                        <asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Password doesn't match" SetFocusOnError="True" ForeColor="Red" ValidationGroup="Second"
+                                            ControlToCompare="passwordnew" ControlToValidate="passwordconfirm"></asp:CompareValidator>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <span id="updCheck" runat="server" visible="false">
+                                            <i id="updCheckI1" runat="server" class="fas fa-check-circle text-success"></i>
+                                            <asp:Label ID="updCheckLabel1" runat="server">Password Updated Successfully</asp:Label>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <asp:Button runat="server" ID="Btnnext1"
+                                            CssClass="btn bg-customBlue bg-gradient text-white btn-lg w-100" Text="Update" Enabled="false" ValidationGroup="Second" OnClick="btnnext1_Click" />
+                                    </div>
+
+
                                 </div>
-
-                                <asp:RequiredFieldValidator ID="vpassword" runat="server" Display="Dynamic" ForeColor="Red"
-                                    ErrorMessage="*password required" ControlToValidate="passwordconfirm"></asp:RequiredFieldValidator>
-
-                                <asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Password doesn't match" SetFocusOnError="True" ForeColor="Red"
-                                    ControlToCompare="passwordnew" ControlToValidate="passwordconfirm"></asp:CompareValidator>
-                            </div>
-                            <div class="col-12">
-                                <span id="updCheck" runat="server" visible="false">
-                                    <i id="updCheckI1" runat="server" class="fas fa-check-circle text-success"></i>
-                                    <asp:Label ID="updCheckLabel1" runat="server">Password Updated Successfully</asp:Label>
-                                </span>
-                            </div>
-                            <div class="col-12 mt-3">
-                                <asp:Button runat="server" ID="btnnext1"
-                                    CssClass="btn bg-customBlue bg-gradient text-white btn-lg w-100" Text="Update" Enabled="False" OnClick="btnnext1_Click" />
-                            </div>
-
-                        </div>
-                    </asp:View>
-                </asp:MultiView>
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="Oldpsw" />
+                            </Triggers>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

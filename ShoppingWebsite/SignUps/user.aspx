@@ -35,7 +35,7 @@
                                             <asp:Label ID="lblmsg" runat="server"></asp:Label>
                                         </div>
                                         <asp:RequiredFieldValidator ID="vusername" runat="server" Display="Dynamic" ForeColor="Red"
-                                            ControlToValidate="username" ErrorMessage="*Enter your name">
+                                            ControlToValidate="username" ErrorMessage="*Enter User name">
                                         </asp:RequiredFieldValidator>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
@@ -78,8 +78,8 @@
                             </div>
 
                             <div class="col-12 mt-4">
-                                <asp:Button runat="server" CommandName="NextView" ID="btnnext1" 
-                                    CssClass="btn btn-primary bg-customBlue btn-lg w-100" Text="Proceed" />
+                                <asp:Button runat="server" CommandName="NextView" ID="btnnext1"
+                                    CssClass="btn btn-primary bg-customBlue btn-lg w-100" Text="Proceed" OnClientClick="" />
                             </div>
                         </div>
                     </div>

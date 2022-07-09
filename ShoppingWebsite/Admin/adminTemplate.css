@@ -1,0 +1,82 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    padding: 0px;
+}
+
+.nav-main {
+    /*min-height: 60rem;*/
+    height: 100%;
+    width: 5em;
+    /*float: left;*/
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    /*background-color: #111;*/
+    overflow-x: hidden;
+}
+
+    .nav-main .btn {
+        font-size: 0.75em;
+        padding: 0px;
+    }
+
+    .nav-main a {
+        text-decoration: none;
+        color: #f8f9fa99;
+        font-family: sans-serif;
+    }
+
+    .nav-main .active a {
+        color: var(--bs-primary);
+    }
+
+    .nav-main .nav-item:hover a {
+        color: white;
+    }
+
+    .nav-main .activeView {
+        /*background-color: var(--bs-danger);*/
+        color: var(--bs-light);
+        border-radius: .5rem;
+        /*border-radius: .25rem 1.5rem 1.5rem .25rem;
+        padding-right: 2em;*/
+    }
+
+        .nav-main .activeView a {
+            color: white;
+        }
+
+    .nav-main .nav-item .fas, .fab, .far, .bi {
+        margin: 0.5em;
+    }
+
+    .nav-main .nav-item:hover {
+        background-color: var(--bs-danger);
+    }
+
+header {
+    display: none;
+}
+
+.footer {
+    display: none;
+}
+
+.nav4 {
+    display: inherit;
+    top: 0;
+    z-index: 1;
+    position: fixed;
+    width: 100%;
+    background-color: var(--bs-white);
+}
+
+@media only screen and (max-width: 770px) {
+    .nav-main {
+        min-height: auto;
+    }
+}

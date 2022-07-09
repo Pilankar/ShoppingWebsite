@@ -5,19 +5,24 @@
         main .nav-item .fas,.fab{
             margin:0.5em;
         }
-         main .navbar .btn{
+         main .navbar  .btn{
              text-align: left;
-
          }
+         
         main .navbar .nav-item:hover {
             background-color: var(--bs-danger);
+            border-radius: .25rem;
         }
         .nav-main {
             min-height: 30rem;
         }
+        .activeView {
+            background-color: var(--bs-danger);
+            border-radius: .25rem;
+        }
         @media only screen and (max-width: 770px) {
             .nav-main{
-                min-height: auto;
+                min-height: inherit;
             }
         }
     </style>
@@ -30,35 +35,46 @@
             $('.Show_password').hover(function show() {
                 //Change the attribute to text  
                 $("#password").attr('type', 'text');
-                $("#cnfpsw").attr('type', 'text');
+                //$("#Oldpsw").attr('type', 'text');
                 $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
             },
                 function () {
                     //Change the attribute back to password  
                     $("#password").attr("type", 'password');
-                    $("#cnfpsw").attr("type", 'password');
+                    //$("#Oldpsw").attr("type", 'password');
                     $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
                 });
+
             $('#editProfile').click(function show(e) {
                 e.preventDefault();
                 $("#View1").show();
                 $("#View2").hide();
                 $("#View3").hide();
+                $("#editProfile").parent().addClass('activeView');
+                $("#orders").parent().removeClass('activeView');
+                $("#changePsw").parent().removeClass('activeView');
             });
             $('#orders').click(function show(e) {
                 e.preventDefault();
                 $("#View1").hide();
                 $("#View2").show();
                 $("#View3").hide();
+                $("#editProfile").parent().removeClass('activeView');
+                $("#orders").parent().addClass('activeView');
+                $("#changePsw").parent().removeClass('activeView');
             });
             $('#changePsw').click(function show(e) {
                 e.preventDefault();
                 $("#View1").hide();
                 $("#View2").hide();
                 $("#View3").show();
+                $("#editProfile").parent().removeClass('activeView');
+                $("#orders").parent().removeClass('activeView');
+                $("#changePsw").parent().addClass('activeView');
             });
 
         }); 
+        
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -69,14 +85,14 @@
             <div class="nav-main col-md-3 bg-customBlue bg-gradient">
                 <nav class="navbar">
                     <ul class="navbar-nav text-light w-100">
-                        <li class="nav-item nav-tabs mb-3 active">
-                            <button class="text-light btn w-100" id="editProfile"><i class="fas fa-pen ms-2"></i>Edit Profile</button>
+                        <li class="nav-item nav-tabs mb-3 activeView">
+                            <button class="text-light btn w-100" id="editProfile" type="button"><i class="fas fa-pen ms-2"></i>Edit Profile</button>
                         </li>
                         <li class="nav-item nav-tabs mb-3">
-                            <button class="text-decoration-none text-light btn w-100" id="orders"><i class='fas fa-cart-arrow-down'></i>My Orders </button>
+                            <button class="text-decoration-none text-light btn w-100" id="orders" type="button"><i class='fas fa-cart-arrow-down'></i>My Orders</button>
                         </li>
                         <li class="nav-item nav-tabs mb-3">
-                            <button class="text-decoration-none text-light btn w-100" id="changePsw"><i class="fas fa-key"></i>Change Password</button>
+                            <button class="text-decoration-none text-light btn w-100" id="changePsw" type="button"><i class="fas fa-key"></i>Change Password</button>
                         </li>
                     <%--<li class="nav-item nav-tabs mb-3 btn">
                             <a class="text-decoration-none text-light" href="#"><i class="fab fa-shopify"></i>Wishlist</a>
@@ -86,6 +102,9 @@
             </div>
             <div class="col-md-7">
                 <div id="multiviews">
+
+                    <%-----Edit Profile Section------------------------------------------------------------------%>
+
                     <div id="View1">
                         <div class="row g-3 border-1">
                             <div class="col-12">
@@ -96,37 +115,37 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="firstName" class="form-label">First name</label>
-                                <asp:TextBox CssClass="form-control" ID="firstName" runat="server" placeholder="John"></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="firstName" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="lastName" class="form-label">Last name</label>
-                                <asp:TextBox CssClass="form-control" ID="lastName" runat="server" placeholder="Doe"></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="lastName" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="phone" class="form-label">Phone Number</label>
-                                <asp:TextBox CssClass="form-control" ID="contact" runat="server" placeholder="9876543210"></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="contact" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="email" class="form-label">Email</label>
-                                <asp:TextBox CssClass="form-control" ID="email" runat="server" placeholder="doe@123.com" TextMode="Email"></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="email" runat="server" TextMode="Email"></asp:TextBox>
                             </div>
 
                             <div class="col-12 mb-2">
                                 <label for="address" class="form-label">Address</label>
-                                <asp:TextBox CssClass="form-control" ID="address" runat="server" placeholder="1234 Main St" TextMode="MultiLine" Rows="1"></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="address" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <label for="city" class="form-label">City</label>
-                                <asp:TextBox CssClass="form-control" ID="city" runat="server" placeholder=""></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="city" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="col-md-4 mb-2">
                                 <label for="state" class="form-label">State</label>
-                                <asp:DropDownList class="form-control" ID="state" runat="server">
+                                <asp:DropDownList CssClass="form-control" ID="state" runat="server">
                                     <asp:ListItem Text="Select" Value="select" />
                                     <asp:ListItem Text="Andhra Pradesh" Value="Andhra Pradesh" />
                                     <asp:ListItem Text="Arunachal Pradesh" Value="Arunachal Pradesh" />
@@ -163,28 +182,31 @@
 
                             <div class="col-md-4 mb-2">
                                 <label for="pincode" class="form-label">Pincode</label>
-                                <asp:TextBox CssClass="form-control" ID="pincode" runat="server" placeholder=""></asp:TextBox>
+                                <asp:TextBox CssClass="form-control" ID="pincode" runat="server"></asp:TextBox>
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="username" class="form-label">Username</label>
-                                <asp:TextBox class="form-control" ID="username" runat="server" ReadOnly="true"></asp:TextBox>
+                                <asp:Label CssClass="form-control" ID="Username" runat="server"></asp:Label>
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <asp:TextBox class="form-control" ID="password" runat="server" TextMode="Password" ReadOnly="true" ClientIDMode="Static"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="password" runat="server" TextMode="Password" ReadOnly="true" ClientIDMode="Static"></asp:TextBox>
                                     <span class="input-group-text Show_password">
                                         <i class="fa fa-eye-slash icon"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="p-2">
-                                <asp:Button class="btn btn-primary bg-customBlue bg-gradient btn-lg w-25" ID="Update" runat="server" Text="Save" OnClick="Update_Click" CausesValidation="False" />
+                                <asp:Button CssClass="btn btn-primary bg-customBlue bg-gradient btn-lg w-100" ID="Update" runat="server" Text="Save" OnClick="Update_Click" CausesValidation="false" />
                             </div>
                         </div>
                     </div>
+
+
+                    <%-----Orders Section------------------------------------------------------------------%>
 
                     <div id="View2">
                         <div class="row g-3">
@@ -194,69 +216,79 @@
                         </div>
                     </div>
 
+
+                    <%-----Change Password Section------------------------------------------------------------------%>
+
                     <div id="View3">
-                        <div class="row g-3">
-                            <div class="col-md-12 mb-2">
-                                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
-                                        <label for="cnfpsw" class="form-label">Old Password <span id="pswsucc" runat="server" visible="false"> <i id="check" runat="server"></i></span> </label>
+                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                        <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
+                            <ContentTemplate>
+                                <div class="row g-3">
+
+                                    <div class="col-md-12 mb-2">
+
+                                        <label for="Oldpsw" class="form-label">Old Password <span id="pswsucc" runat="server" visible="false"><i id="check" runat="server"></i></span></label>
                                         <div class="input-group">
-                                            <asp:TextBox class="form-control" ID="cnfpsw" runat="server" TextMode="Password" placeholder=""
-                                                OnTextChanged="cnfpsw_TextChanged" ClientIDMode="Static" AutoPostBack="true"></asp:TextBox>
-                                            <span class="input-group-text Show_password">
+                                            <asp:TextBox CssClass="form-control" ID="Oldpsw" runat="server"
+                                                OnTextChanged="Oldpsw_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                            <%--<span class="input-group-text Show_password">
                                                 <i class="fa fa-eye-slash icon"></i>
-                                            </span>
+                                            </span>--%>
                                         </div>
-                                        <asp:Label ID="lblmsg" runat="server" Visible="false"></asp:Label>
-                                    </ContentTemplate>
-                                    <Triggers>
-                                        <asp:PostBackTrigger ControlID="cnfpsw" />
-                                    </Triggers>
-                                </asp:UpdatePanel>
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="password">New Password:</label>
-                                <div class="input-group">
-                                    <asp:TextBox class="form-control" ID="passwordnew"
-                                        runat="server" placeholder="" TextMode="Password"></asp:TextBox>
-                                    <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
+                                        <asp:Label ID="lblmsg" runat="server" Visible="false" Font-Italic="true" ForeColor="Red"></asp:Label>
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="password">New Password:</label>
+                                        <div class="input-group">
+                                            <asp:TextBox CssClass="form-control" ID="passwordnew"
+                                                runat="server" TextMode="SingleLine"></asp:TextBox>
+                                            <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
                                         <i class="fa fa-info-circle"></i>
-                                    </asp:Label>
-                                </div>
-                                <asp:RequiredFieldValidator ID="vpasswordconfirm" runat="server" Display="Dynamic" ForeColor="Red"
-                                    ErrorMessage="*password required" ControlToValidate="passwordnew"></asp:RequiredFieldValidator>
-                            </div>
+                                            </asp:Label>
+                                        </div>
+                                        <asp:RequiredFieldValidator ID="vpasswordconfirm" runat="server" Display="Dynamic" ForeColor="Red" ValidationGroup="Second"
+                                            ErrorMessage="*password required" ControlToValidate="passwordnew"></asp:RequiredFieldValidator>
+                                    </div>
 
-                            <div class="col-md-12 mb-3">
-                                <label for="password">Confirm New Password:</label>
-                                <div class="input-group">
-                                    <asp:TextBox class="form-control" ID="passwordconfirm"
-                                        runat="server" placeholder="" TextMode="Password"></asp:TextBox>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="password">Confirm New Password:</label>
+                                        <div class="input-group">
+                                            <asp:TextBox CssClass="form-control" ID="passwordconfirm"
+                                                runat="server" TextMode="SingleLine"></asp:TextBox>
 
-                                    <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
+                                            <asp:Label runat="server" ToolTip="Minimum 8 characters" CssClass="input-group-text">
                                         <i class="fa fa-info-circle"></i>
-                                    </asp:Label>
+                                            </asp:Label>
+                                        </div>
+
+                                        <asp:RequiredFieldValidator ID="vpassword" runat="server" Display="Dynamic" ForeColor="Red" ValidationGroup="Second"
+                                            ErrorMessage="*password required" ControlToValidate="passwordconfirm"></asp:RequiredFieldValidator>
+
+                                        <asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Password doesn't match" SetFocusOnError="True" ForeColor="Red" ValidationGroup="Second"
+                                            ControlToCompare="passwordnew" ControlToValidate="passwordconfirm"></asp:CompareValidator>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <span id="updCheck" runat="server" visible="false">
+                                            <i id="updCheckI1" runat="server" class="fas fa-check-circle text-success"></i>
+                                            <asp:Label ID="updCheckLabel1" runat="server">Password Updated Successfully</asp:Label>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <asp:Button runat="server" ID="Btnnext1"
+                                            CssClass="btn bg-customBlue bg-gradient text-white btn-lg w-100" Text="Update" Enabled="false" ValidationGroup="Second" OnClick="Btnnext1_Click" />
+                                    </div>
+
+
                                 </div>
-                                
-                                <asp:RequiredFieldValidator ID="vpassword" runat="server" Display="Dynamic" ForeColor="Red"
-                                    ErrorMessage="*password required" ControlToValidate="passwordconfirm"></asp:RequiredFieldValidator>
-
-                                <asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Password doesn't match" SetFocusOnError="True" ForeColor="Red"
-                                    ControlToCompare="passwordnew" ControlToValidate="passwordconfirm"></asp:CompareValidator>
-                            </div>
-                            <div class="col-12">
-                                <span id="updCheck" runat="server" visible="false">
-                                    <i id="updCheckI1" runat="server" class="fas fa-check-circle text-success"></i>
-                                    <asp:Label ID="updCheckLabel1" runat="server">Password Updated Successfully</asp:Label>
-                                </span>
-                            </div>
-                            <div class="col-12 mt-3">
-                                <asp:Button runat="server" ID="btnnext1" 
-                                    CssClass="btn bg-customBlue bg-gradient text-white btn-lg w-100" Text="Update" Enabled="False" OnClick="btnnext1_Click" />
-                            </div>
-
-                        </div>
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="Oldpsw" />
+                            </Triggers>
+                        </asp:UpdatePanel>
                     </div>
                 </div>
             </div>

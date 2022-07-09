@@ -1,0 +1,100 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="NestedMasterPage1.master.cs" Inherits="ShoppingWebsite.NestedMasterPage1" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <asp:ContentPlaceHolder ID="head2" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="row m-0">
+
+        <div class="nav-main col-lg-2 col-md-3 bg-customBlue bg-gradient p-0">
+            <span class="navbar-brand d-block mb-1 px-3 py-2">
+                <span style="color: tomato; font-size: 1.2em; letter-spacing: -2px;">funky</span>
+                <span style="font-size: large; letter-spacing: 2px; color: #fff;">FASHION</span>
+            </span>
+            <nav class="navbar p-2">
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item btn activeView">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("SellerHomePage.aspx")%>'>
+                            <i class="bi bi-house-door"></i>Sales Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="orders" href='<%=Response.ApplyAppPathModifier("Orders.aspx")%>'>
+                            <i class="bi bi-cash-coin"></i>Orders
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("Products.aspx")%>'>
+                            <i class="bi bi-cart3"></i>View Products
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("EditProducts.aspx")%>'>
+                            <i class="bi bi-pencil-square"></i>Edit Products
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("../addproduct.aspx")%>'>
+                            <i class="bi bi-bag-plus"></i>Launch New Product
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("addStock.aspx")%>'>
+                            <i class="bi bi-file-earmark-plus"></i>Add Stock
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" id="" href='<%=Response.ApplyAppPathModifier("SellerProfile.aspx")%>'>
+                            <i class="bi bi-person-fill"></i>My Profile
+                        </a>
+                    </li>
+                </ul>
+
+                <h6 class="w-100 d-flex justify-content-between px-3 mt-4 mb-2 text-muted">
+                    <span class="text-light">Saved reports</span>
+                    <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                </h6>
+
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item btn">
+                        <a class="" href="#">
+                            <i class="far fa-file-alt"></i>
+                            Current month
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" href="#">
+                            <i class="far fa-file-alt"></i>
+                            Last quarter
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="" href="#">
+                            <i class="far fa-file-alt"></i>
+                            Social engagement
+                        </a>
+                    </li>
+                    <li class="nav-item btn">
+                        <a class="t" href="#">
+                            <i class="far fa-file-alt"></i>
+                            Year-end sale
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+
+        <div class="col-lg-10 col-md-9 px-0" style="background-color: #ffe9e9">
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+            </asp:ContentPlaceHolder>
+
+        </div>
+    </div>
+</asp:Content>
